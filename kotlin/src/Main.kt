@@ -15,15 +15,15 @@ class Library {
     fun addBook(book: Book) {
         require(book.id.isNotBlank() && book.title.isNotBlank() && book.author.isNotBlank()) { "Book details cannot be empty." }
         require(book.publicationYear >= 0 && book.totalCopies > 0) { "Invalid year or copy count." }
-        require(!books.containsKey(book.id.uppercase())) { "Duplicate Book ID." }
-        books[book.id.uppercase()] = book.copy(id = book.id.uppercase())
+        require(!books.containsKey(book.id.toUpperCase())) { "Duplicate Book ID." }
+        books[book.id.toUpperCase()] = book.copy(id = book.id.toUpperCase())
     }
     fun issueBook(bookId: String, studentId: String) {
-        val book = books[bookId.uppercase()] ?: error("Book not found.")
-        require(students.containsKey(studentId.uppercase())) { "Student not found." }
+        val book = books[bookId.toUpperCase()] ?: error("Book not found.")
+        require(students.containsKey(studentId.toUpperCase())) { "Student not found." }
         require(book.availableCopies > 0) { "No copies available." }
         book.availableCopies--
-        transactions.add(IssueRecord(book.id, studentId.uppercase(), LocalDate.now()))
+        transactions.add(IssueRecord(book.id, studentId.toUpperCase(), LocalDate.now()))
     }
     fun returnBook(bookId: String, studentId: String) {
         val record = transactions.lastOrNull { it.bookId.equals(bookId, true) && it.studentId.equals(studentId, true) && it.returnDate == null }
@@ -59,7 +59,7 @@ fun main() {
                     println("%-8s %-28s %-24s %-8s %s".format("ID", "TITLE", "AUTHOR", "YEAR", "AVAILABLE/TOTAL"))
                     library.books.values.forEach { println("%-8s %-28s %-24s %-8d %d/%d".format(it.id, it.title, it.author, it.publicationYear, it.availableCopies, it.totalCopies)) }
                 }
-                2 -> { print("Enter Book ID: "); val b=library.books[readLine()?.trim()?.uppercase()]; println(b ?: "Book not found.") }
+                2 -> { print("Enter Book ID: "); val b=library.books[readLine()?.trim()?.toUpperCase()]; println(b ?: "Book not found.") }
                 3 -> { print("Enter title keyword: "); val q=readLine()?.trim().orEmpty(); val found=library.books.values.filter { it.title.contains(q, true) }; if(found.isEmpty()) println("No matching books found.") else found.forEach { println(it) } }
                 4 -> { print("Book ID: "); val b=readLine()?.trim().orEmpty(); print("Student ID: "); val s=readLine()?.trim().orEmpty(); library.issueBook(b,s); println("Book issued successfully.") }
                 5 -> { print("Book ID: "); val b=readLine()?.trim().orEmpty(); print("Student ID: "); val s=readLine()?.trim().orEmpty(); library.returnBook(b,s); println("Book returned successfully.") }
