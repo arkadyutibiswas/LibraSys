@@ -8,7 +8,7 @@
     books:[
       {id:"B101",title:"The Alchemist",author:"Paulo Coelho",year:1988,total:5,available:5,category:"Fiction"},
       {id:"B102",title:"Wings of Fire",author:"A. P. J. Abdul Kalam",year:1999,total:4,available:3,category:"Biography"},
-      {id:"B103",title:"Atomic Habits",author:"James Clear",year:2018,total:6,available:4,category:"Self-help"},
+      {id:"B103",title:"Atomic Habits",author:"James Clear",year:2018,total:6,available:5,category:"Self-help"},
       {id:"B104",title:"The Psychology of Money",author:"Morgan Housel",year:2020,total:3,available:3,category:"Finance"},
       {id:"B105",title:"Clean Code",author:"Robert C. Martin",year:2008,total:2,available:1,category:"Technology"}
     ],
