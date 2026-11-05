@@ -71,7 +71,7 @@
     if(mode==="add-book"||mode==="edit-book"){title=mode==="add-book"?"Add a book":"Edit book details";submit=mode==="add-book"?"Add to inventory":"Save changes";fields=field("BOOK ID","id","e.g. B106","text",b?.id||"")+field("TITLE","title","Book title","text",b?.title||"",true,true)+field("AUTHOR","author","Author name","text",b?.author||"")+field("PUBLICATION YEAR","year","e.g. 2022","number",b?.year||"")+field("TOTAL COPIES","total","Number of copies","number",b?.total||"")+selectField("CATEGORY","category",["Fiction","Biography","Technology","Science","Self-help","Finance","History","Other"].map(x=>'<option '+((b?.category||"Fiction")===x?"selected":"")+'>'+x+'</option>').join(""));}
     else if(mode==="add-student"){title="Register a student";submit="Add student";fields=field("STUDENT ID","id","e.g. S105")+field("FULL NAME","name","Student name","text","",true,true)+field("EMAIL ADDRESS","email","student@college.edu","email","",true,true);}
     else if(mode==="issue-book"){title="Issue a book";submit="Confirm issue";fields=selectField("SELECT BOOK","bookId",'<option value="">Choose a book</option>'+db.books.filter(x=>x.available>0).map(x=>'<option value="'+esc(x.id)+'">'+esc(x.title)+' · '+esc(x.id)+' ('+x.available+' available)</option>').join(""))+selectField("SELECT STUDENT","studentId",'<option value="">Choose a student</option>'+db.students.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' · '+esc(x.id)+'</option>').join(""));}
-    $("#modalTitle").textContent=title;$("#modalSubmit").textContent=submit;$("#modalFields").innerHTML=fields;$("#formError").classList.add("hidden");$("#modalBackdrop").classList.remove("hidden");setTimeout(()=>$("#modalFields input")?.focus(),50);
+    $("#modalTitle").textContent=title;$("#modalSubmit").textContent=submit;$("#modalFields").innerHTML=fields;if(mode==="edit-book")$("#f-id").readOnly=true;$("#formError").classList.add("hidden");$("#modalBackdrop").classList.remove("hidden");setTimeout(()=>$("#modalFields input")?.focus(),50);
   }
   function closeModal(){$("#modalBackdrop").classList.add("hidden");}
   function error(msg){$("#formError").textContent=msg;$("#formError").classList.remove("hidden");}
@@ -82,7 +82,7 @@
       if(!d.id.trim()||!d.title.trim()||!d.author.trim())return error("Please complete all required book details.");
       if(!Number.isInteger(year)||year<0||year>new Date().getFullYear())return error("Enter a valid publication year.");
       if(!Number.isInteger(total)||total<1)return error("Total copies must be at least 1.");
-      if(modalMode==="add-book"&&book(d.id.trim()))return error("That Book ID already exists.");
+      if(modalMode==="add-book"&&db.books.some(x=>x.id.toLowerCase()===d.id.trim().toLowerCase()))return error("That Book ID already exists.");
       if(modalMode==="edit-book"){const old=book(editingId),issued=old.total-old.available;if(total<issued)return error("Total copies cannot be less than the copies currently issued.");Object.assign(old,{title:d.title.trim(),author:d.author.trim(),year,total,available:total-issued,category:d.category});}
       else db.books.push({id:d.id.trim().toUpperCase(),title:d.title.trim(),author:d.author.trim(),year,total,available:total,category:d.category});
       toast(modalMode==="add-book"?"Book added to your inventory.":"Book details updated.");
