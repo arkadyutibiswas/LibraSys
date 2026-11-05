@@ -54,7 +54,7 @@ public class Main {
         System.out.println(b==null?"Book not found.":b);
     }
     private static void searchByTitle() {
-        System.out.print("Enter title keyword: "); var found=library.searchByTitle(input.nextLine().trim());
+        System.out.print("Enter title keyword: "); java.util.List<Book> found=library.searchByTitle(input.nextLine().trim());
         if(found.isEmpty()) System.out.println("No matching books found.");
         else for(Book b:found) System.out.println(b);
     }
@@ -69,8 +69,8 @@ public class Main {
         library.returnBook(b,s); System.out.println("Book returned successfully.");
     }
     private static void displayIssued() {
-        var active=library.getActiveIssues();
+        java.util.List<LibraryService.IssueRecord> active=library.getActiveIssues();
         if(active.isEmpty()) { System.out.println("No books are currently issued."); return; }
-        for(var r:active) System.out.println(r.getBookId()+" | "+r.getStudentId()+" | "+r.getIssueDate());
+        for(LibraryService.IssueRecord r:active) System.out.println(r.getBookId()+" | "+r.getStudentId()+" | "+r.getIssueDate());
     }
 }
