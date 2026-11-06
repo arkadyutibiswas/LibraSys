@@ -1,70 +1,46 @@
-# LibraSys — Library Management System
+# LibraSys — Student Library Portal
 
-A multi-technology Library Management System created as an IT Workshop project using **HTML, CSS, JavaScript, Java and Kotlin**.
+A multi-technology Library Management System created as an IT Workshop project using HTML, CSS, JavaScript, Java and Kotlin.
 
 ## Live demo
-After enabling GitHub Pages, the website will be available at:
 https://arkadyutibiswas.github.io/LibraSys/
 
-## Features
-- Dashboard with live collection, available-copy, issued-book and student counts
-- Searchable book catalogue with add, edit and delete actions
-- Student registration and directory search
-- Issue a book to a registered student and return it against its active issue record
-- Transaction history with issue and return dates
-- Responsive desktop and mobile layout
-- Browser storage so demo changes remain saved in the same browser
+## Student portal features
+- Student-focused dashboard with catalogue and personal borrowing summary
+- Search and filter 28 well-known books across fiction, fantasy, classics, mystery, science, technology, biography and self-development
+- Borrow available books from the catalogue
+- Personal borrowing history with 14-day due dates and overdue status
+- Return-book action in the demo
+- Demo student switcher to preview the portal from different sample student accounts
+- Responsive layout, visible champagne-gold accents and interactive button states
+- Browser localStorage persistence
 
 ## Technologies
 | Technology | Purpose |
 |---|---|
-| HTML | Page structure and accessible forms |
-| CSS | Responsive layout and visual design |
-| JavaScript | Interactive dashboard and browser-side data handling |
+| HTML | Page structure and accessible controls |
+| CSS | Responsive layout, theme and interactions |
+| JavaScript | Catalogue, borrowing records and browser-side data |
 | Java | Object-oriented console implementation |
-| Kotlin | Console implementation using collections and `when` |
+| Kotlin | Console implementation using collections and when |
 
-## Run the website locally
-1. Download or clone this repository.
-2. Open `index.html` in a modern browser.
-3. Use the dashboard to add books and students, issue copies, and record returns.
+## Run the website
+Open index.html in a modern browser, or visit the GitHub Pages link above.
 
-The website is a front-end demonstration. Its data is stored in the current browser using localStorage; it is **not yet connected** to the Java or Kotlin console programs or a shared database. Clearing browser storage resets the demo data.
+The website is a front-end student demo. It stores data in the current browser using localStorage; it is not connected to a shared database or to the Java/Kotlin console programs. The demo profile switcher is not real authentication, and browser-side permissions are not a security boundary. A real multi-user deployment would need a backend, verified student login and server-side authorization.
+
+Existing browser data is preserved when the expanded catalogue is loaded; new catalogue titles are added without deleting existing borrowing records.
 
 ## Run the Java console version
-From the repository root:
-
 ```bash
 javac backend/java/*.java
 java backend.java.Main
 ```
 
 ## Run the Kotlin console version
-With the Kotlin compiler installed:
-
 ```bash
 kotlinc kotlin/src/Main.kt -include-runtime -d librasys.jar
 java -jar librasys.jar
 ```
 
-## Project structure
-```text
-LibraSys/
-├── index.html
-├── styles.css
-├── app.js
-├── backend/
-│   └── java/
-│       ├── Book.java
-│       ├── Student.java
-│       ├── LibraryService.java
-│       └── Main.java
-└── kotlin/
-    └── src/
-        └── Main.kt
-```
-
-No login is required. The dashboard opens in demo mode with sample books, students and issue records.
-
----
-Made for learning, organised for real use.
+Made for learning, organised for readers.
